@@ -1,8 +1,9 @@
 # Robotsavam17-payment-system
 payment website for Robotsavam17 @Amrita University
 
-## How it works?
+![Users](https://img.shields.io/badge/Users-%3E2000-brightgreen.svg)
 
+## How it works?
 
 Phone number registered during the registration for Robotsavam17 will be used as login id.
 As soon as the registration process for an individual is done, he will receive a generated text message
@@ -20,3 +21,6 @@ User database.
 
 User can change the login password by the option provided in the website and generate OTP for the number 
 to change password.
+
+You can recharge your account only through recharge desk in the registration arena.
+
