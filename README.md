@@ -1,7 +1,7 @@
 # Robotsavam17-payment-system
 payment website for Robotsavam17 @Amrita University
 
-![status](https://img.shields.io/pypi/status/Django.svg)
+![status](https://img.shields.io/badge/Status-Stable-blue.svg)
 ![maintained](https://img.shields.io/maintenance/yes/2017.svg)
 ![Users](https://img.shields.io/badge/Users-%3E2000-brightgreen.svg)
 
