@@ -38,7 +38,7 @@
             var user_phone = $("#user_phone").val();
             var amount = $("#amount").val();
             // Returns successful data submission message when the entered information is stored in database.
-            var dataString = 'userid=' + user_id + '&username=' + user_name + '&userphone=' + user_phone + '&amount=' + amount;
+            var dataString = 'userid=' + user_id + '&name=' + user_name + '&userphone=' + user_phone + '&amount=' + amount;
           
             if (user_id == '' || user_phone == '' || amount == '' || user_name == '') {
                 $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill All Fields</span>').fadeIn('slow');
