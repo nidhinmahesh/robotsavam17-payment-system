@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Register</title>
+	<title>User</title>
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -32,38 +32,30 @@
 	<!-- /theme JS files -->
 	<script type="text/javascript">
     $(document).ready(function() {
-        $("#submit").click(function() {
-        	var user_id = $("#user_id").val();
-            var user_name = $("#user_name").val();
-            var user_phone = $("#user_phone").val();
-            var amount = $("#amount").val();
-            // Returns successful data submission message when the entered information is stored in database.
-            var dataString = 'userid=' + user_id + '&username=' + user_name + '&userphone=' + user_phone + '&amount=' + amount;
+    	$("#check").click(function() {
+    	var user_id = $("#user_id").val();
+    	var user_phone = $("#user_phone").val();
+        // Returns successful data submission message when the entered information is stored in database.
+        var dataString = 'userid=' + user_id + '&userPhone=' + user_phone;
           
-            if (user_id == '' || user_phone == '' || amount == '' || user_name == '') {
-                $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill All Fields</span>').fadeIn('slow');
+        if (user_id == ''||user_phone=='') {
+            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill UserID and Phone No</span>').fadeIn('slow');
 
-                $('#response').delay(500).fadeOut('slow');
-            } else {
-                // AJAX Code To Submit Form.
-                $.ajax({
-                    type: "POST",
-                    url: "php/registerUser.php",
-                    data: dataString,
-                    cache: false,
-                    success: function(result) {
-                    	console.log(result);
-                        if (result == 'Success')
-                            $('#response').html('<span class="help-block text-success"><i class="icon-checkmark-circle2 position-left"></i>Registration Success</span>').fadeIn('slow');
-                        else
-                            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Registration Failed</span>').fadeIn('slow');
+            $('#response').delay(500).fadeOut('slow');
+        } else {
+        	var data = "userid="+user_id+"&userPhone="+user_phone;
+			$.post("php/checkUser.php", data, function(json) {
+			    console.log(json.user_name);
+			    console.log(json.balance);
 
-                        $('#response').delay(500).fadeOut('slow');
-                    }
-                });
-            }
+			    $("#amount").attr("value",json.balance);
+			    	$("#user_name").attr("value",json.user_name);
+			}, "json");
+
+        }
             return false;
         });
+        
     });
 </script>
 </head>
@@ -123,7 +115,7 @@
 						<div class="panel panel-body login-form">
 							<div class="text-center">
 								<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
-								<h5 class="content-group">Register a New User<small class="display-block">Fill the details</small></h5>
+								<h5 class="content-group">Transaction<small class="display-block">Fill the details</small></h5>
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
@@ -133,12 +125,6 @@
 								</div>
 							</div>
 
-							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_name" class="form-control" placeholder="Name">
-								<div class="form-control-feedback">
-									<i class="icon-user text-muted"></i>
-								</div>
-							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
 								<input type="text" id="user_phone" class="form-control" placeholder="Phone No">
@@ -147,18 +133,24 @@
 								</div>
 							</div>
 
+							<div class="form-group">
+								<button id="check" class="btn bg-pink-400 btn-block legitRipple">Check <i class="icon-circle-right2 position-right"></i></button>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input type="text" id="user_name" class="form-control" placeholder="Name">
+								<div class="form-control-feedback">
+									<i class="icon-user text-muted"></i>
+								</div>
+							</div>
+
+
 							<div class="form-group has-feedback has-feedback-left">
 								<input type="text" id="amount" class="form-control" placeholder="Amount">
 								<div class="form-control-feedback">
 									<i class="icon-coins text-muted"></i>
 								</div>
 							<div id="response"></div>
-							</div>
-
-						
-
-							<div class="form-group">
-								<button name="updateUser" id="submit" type="submit" class="btn bg-pink-400 btn-block">Register <i class="icon-circle-right2 position-right"></i></button>
 							</div>
 
 						</div>
