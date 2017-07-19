@@ -12,7 +12,7 @@ CREATE TABLE `transactions` (
 
 CREATE TABLE `users` (
   `user_id` varchar(5) NOT NULL,
-  `user_name` varchar(11) NOT NULL,
+  `user_name` varchar(25) NOT NULL,
   `user_phone` varchar(11) NOT NULL,
   `balance` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
