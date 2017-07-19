@@ -26,16 +26,16 @@ You can recharge your account only through recharge desk in the registration are
 # Demo
 
 ## Register
-![](http://imgur.com/7cnmabB)
+![alt text](http://imgur.com/7cnmabB)
 
 ## Stall
-![](http://imgur.com/a/KgTpV)
+![alt text](http://imgur.com/a/KgTpV)
 
 ## Recharge
-![](http://imgur.com/a/cS8st)
+![alt text](http://imgur.com/a/cS8st)
 
 ## User
-![](http://imgur.com/a/AFfAU)
+![alt text](http://imgur.com/a/AFfAU)
 
 # License
 ````
