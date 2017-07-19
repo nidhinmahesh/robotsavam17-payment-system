@@ -26,13 +26,16 @@ You can recharge your account only through recharge desk in the registration are
 # Demo
 
 ## Register
-![](https://raw.githubusercontent.com/nidhinmahesh/Robotsavam17-payment-system/master/demo/register.gif)
+![](http://imgur.com/7cnmabB)
 
 ## Stall
+![](http://imgur.com/a/KgTpV)
 
 ## Recharge
+![](http://imgur.com/a/cS8st)
 
 ## User
+![](http://imgur.com/a/AFfAU)
 
 # License
 ````
