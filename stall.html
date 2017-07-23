@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -8,61 +8,61 @@
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\icons\icomoon\styles.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\core.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\components.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\colors.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
 
 	<!-- Core JS files -->
-	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\loaders\pace.min.js"></script>
+	<script type="text/javascript" src="assets\js\core\libraries\jquery.min.js"></script>
+	<script type="text/javascript" src="assets\js\core\libraries\bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\loaders\blockui.min.js"></script>
 	<!-- /core JS files -->
 
 
 	<!-- Theme JS files -->
-	<script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\forms\validation\validate.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\forms\styling\uniform.min.js"></script>
+	<script type="text/javascript" src="assets\js\core\app.js"></script>
 
-	<script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\ui\ripple.min.js"></script>
 	<!-- /theme JS files -->
 	<script type="text/javascript">
     $(document).ready(function() {
     	$("#check").click(function() {
-    	var user_id = $("#user_id").val();
+    	var userId = $("#userId").val();
         // Returns successful data submission message when the entered information is stored in database.
-        var dataString = 'userid=' + user_id;
           
-        if (user_id == '') {
-            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill UserID</span>').fadeIn('slow');
+        if (userId == '') {
+            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill userId</span>').fadeIn('slow');
 
             $('#response').delay(500).fadeOut('slow');
         } else {
-        	var data = "userid="+user_id;
-			$.post("php/checkUser.php", data, function(json) {
-			    console.log(json.user_name);
-			    console.log(json.user_phone);
+        	var data = 'userId='+userId;
+			$.post("php/checkUserStall.php", data, function(json) {
+			    console.log(json.userName);
+			    console.log(json.userPhone);
 
-			    $("#user_name").attr("value",json.user_name);
-			    	$("#user_phone").attr("value",json.user_phone);
+			    $("#userName").attr("value",json.userName);
+			    	$("#userPhone").attr("value",json.userPhone);
 			}, "json");
 
         }
             return false;
         });
         $("#submit").click(function() {
-            var user_phone = $("#user_phone").val();
+            var userPhone = $("#userPhone").val();
             var amount = $("#amount").val();
-    		var user_id = $("#user_id").val();
+    		var userId = $("#userId").val();
+    		var item = $("#item").val();
             // Returns successful data submission message when the entered information is stored in database.
-            var dataString ='userid='+user_id+'&userPhone=' + user_phone + '&amount=' + amount;
+            var dataString ='userId='+userId+'&userPhone=' + userPhone + '&item=' + item +'&amount=' + amount;
           
-            if (user_id==''||user_phone == '' || amount == '') {
-                $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Make sure of the phone no and amount</span>').fadeIn('slow');
+            if (userId==''||userPhone == '' || amount == '' || item == '') {
+                $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Make sure of the phone no, item id and amount</span>').fadeIn('slow');
 
                 $('#response').delay(500).fadeOut('slow');
             } else {
@@ -74,12 +74,12 @@
                     cache: false,
                     success: function(result) {
                     	console.log(result);
-                        if (result == 'Success')
+                        if (result == 2)
                             $('#response').html('<span class="help-block text-success"><i class="icon-checkmark-circle2 position-left"></i>Transaction Success</span>').fadeIn('slow');
-                        else if(result == 'Fund')
+                        else if(result == -1)
                             $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Insufficient Balance</span>').fadeIn('slow');
-                        else
-                            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i>Transaction Failed</span>').fadeIn('slow');
+                        else if(result == 1)
+                            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i>Balance updated !!Transaction not Recorded</span>').fadeIn('slow');
 
                         $('#response').delay(500).fadeOut('slow');
                     }
@@ -96,35 +96,14 @@
 	<!-- Main navbar -->
 	<div class="navbar navbar-inverse bg-indigo">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+			<a class="navbar-brand" href="index.html"><img src="assets\images\logo_light.png" alt=""></a>
 
 			<ul class="nav navbar-nav pull-right visible-xs-block">
 				<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
 			</ul>
 		</div>
 
-		<div class="navbar-collapse collapse" id="navbar-mobile">
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="#">
-						<i class="icon-display4"></i> <span class="visible-xs-inline-block position-right"> Go to website</span>
-					</a>
-				</li>
-
-				<li>
-					<a href="#">
-						<i class="icon-user-tie"></i> <span class="visible-xs-inline-block position-right"> Contact admin</span>
-					</a>
-				</li>
-
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-cog3"></i>
-						<span class="visible-xs-inline-block position-right"> Options</span>
-					</a>
-				</li>
-			</ul>
-		</div>
+		
 	</div>
 	<!-- /main navbar -->
 
@@ -150,7 +129,7 @@
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_id" class="form-control" placeholder="ID">
+								<input type="text" id="userId" class="form-control" placeholder="ID">
 								<div class="form-control-feedback">
 									<i class="icon-pushpin text-muted"></i>
 								</div>
@@ -161,16 +140,23 @@
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_name" class="form-control" placeholder="Name">
+								<input type="text" id="userName" class="form-control" placeholder="Name">
 								<div class="form-control-feedback">
 									<i class="icon-user text-muted"></i>
 								</div>
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_phone" class="form-control" placeholder="Phone No">
+								<input type="text" id="userPhone" class="form-control" placeholder="Phone No">
 								<div class="form-control-feedback">
 									<i class="icon-phone2 text-muted"></i>
+								</div>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input type="text" id="item" class="form-control" placeholder="Item ID">
+								<div class="form-control-feedback">
+									<i class="icon-bag text-muted"></i>
 								</div>
 							</div>
 

@@ -1,9 +1,10 @@
 <?php
-$stall_id="RegistrationDesk"; //TODO Session Variable for registration counter login
-$user_id=$_POST['userid'];
-$user_phone=$_POST['userphone'];
+$stallId="RegistrationDesk"; //TODO Session Variable for registration counter login
+$item="REG";
+$userId=$_POST['userId'];
+$userPhone=$_POST['userPhone'];
 $amount=$_POST['amount'];
-$user_name=$_POST['name'];
+$userName=$_POST['userName'];
 
 include('dbconnect.php');
 
@@ -13,16 +14,18 @@ include('dbconnect.php');
 	    exit();
 	}
 
-		$query = "INSERT INTO users (user_id, user_name, user_phone, balance) VALUES ('$user_id','$user_name','$user_phone','$amount')";
+		$query = "INSERT INTO users (userId, userName, userPhone, balance) VALUES ('$userId','$userName','$userPhone','$amount')";
 		$result=$mysqli->query($query);
 		if($result) {
-			$message = "Success";
-			$query="INSERT INTO transactions (user_id, stall_id, amount) VALUES
-		('$user_id', '$stall_id', '$amount')";	
+			$message = 1;//insert user success
+			$query="INSERT INTO transactions (userId, stallId, item, amount) VALUES
+		('$userId', '$stallId', '$item', '$amount')";	
 			$mysqli->query($query);
+			if(!$mysqli->error)
+				$message = 2;//insert transaction success
 			unset($_POST);
 		} else {
-			$message = "User ID exists";	
+			$message = 0;//insert user failed	
 		}
 	
 	echo $message;

@@ -1,8 +1,9 @@
 <?php
-$stall="storeidhere"; //TODO Session Variable for stall login
-$phone=$_POST['userPhone'];
+$stallId="stall"; //TODO Session Variable for stall login
+$userPhone=$_POST['userPhone'];
+$item=$_POST['item'];
 $amount=$_POST['amount'];
-$user_id=$_POST['userid'];
+$userId=$_POST['userId'];
 
 		
 include('dbconnect.php');
@@ -12,28 +13,24 @@ include('dbconnect.php');
 	    printf("Connect failed: %s\n", mysqli_connect_error());
 	    exit();
 	}
-	$status=$mysqli->query("select balance from users where user_phone='".$phone."'");
+	$status=$mysqli->query("select balance from users where userPhone='".$userPhone."'");
 	$status=$status->fetch_assoc();
 	$balance_new=$status['balance']-$amount;
-	if($balance_new>=0){
-		$query = "UPDATE users SET balance = balance-$amount where user_phone=$phone and user_id=$user_id";
+	if($balance_new>=0){//if balance is available
+		$query = "UPDATE users SET balance = $balance_new where userPhone=$userPhone and userId=$userId";
 		$mysqli->query($query);
 		$result=$mysqli->affected_rows;
-		if($result) { 
-		// 	$query = "UPDATE stalls SET balance = balance+$amount where stall_id=$stall";
-		// $mysqli->query($query);
-			$message = "Success";
-			$query="INSERT INTO transactions (user_id, stall_id, amount) VALUES
-		('$user_id', '$stall', '-$amount')";	
+		if($result==1) { //if update users is successful
+			$query="INSERT INTO transactions (userId, stallId,item, amount) VALUES ('$userId','$stallId','$item','-$amount')";	
 			$mysqli->query($query);
+			if(!$mysqli->error)
+				$result = 2;//insert transaction success
 			unset($_POST);
-		} else {
-			$message = "Failed";	
-		}
+		} 
 	}
 	else
-		$message = "Fund";
+		$result = -1;//insufficient balance
 	
-	echo $message;
+	echo $result;
 
 ?>

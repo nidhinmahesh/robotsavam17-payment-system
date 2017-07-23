@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -8,43 +8,44 @@
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\icons\icomoon\styles.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\core.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\components.css" rel="stylesheet" type="text/css">
+	<link href="assets\css\colors.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
 
 	<!-- Core JS files -->
-	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\loaders\pace.min.js"></script>
+	<script type="text/javascript" src="assets\js\core\libraries\jquery.min.js"></script>
+	<script type="text/javascript" src="assets\js\core\libraries\bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\loaders\blockui.min.js"></script>
 	<!-- /core JS files -->
 
 
 	<!-- Theme JS files -->
-	<script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\forms\validation\validate.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\forms\styling\uniform.min.js"></script>
+	<script type="text/javascript" src="assets\js\core\app.js"></script>
 
-	<script type="text/javascript" src="assets/js/plugins/ui/ripple.min.js"></script>
+	<script type="text/javascript" src="assets\js\plugins\ui\ripple.min.js"></script>
 	<!-- /theme JS files -->
 	<script type="text/javascript">
     $(document).ready(function() {
         $("#submit").click(function() {
-        	var user_id = $("#user_id").val();
-            var user_name = $("#user_name").val();
-            var user_phone = $("#user_phone").val();
+        	var userId = $("#userId").val();
+            var userName = $("#userName").val();
+            var userPhone = $("#userPhone").val();
             var amount = $("#amount").val();
             // Returns successful data submission message when the entered information is stored in database.
-            var dataString = 'userid=' + user_id + '&name=' + user_name + '&userphone=' + user_phone + '&amount=' + amount;
+            var dataString = 'userId=' + userId + '&userName=' + userName + '&userPhone=' + userPhone + '&amount=' + amount;
           
-            if (user_id == '' || user_phone == '' || amount == '' || user_name == '') {
+            if (userId == '' || userPhone == '' || amount == '' || userName == '') {
                 $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill All Fields</span>').fadeIn('slow');
 
                 $('#response').delay(500).fadeOut('slow');
-            } else {
+            }
+             else {
                 // AJAX Code To Submit Form.
                 $.ajax({
                     type: "POST",
@@ -53,8 +54,10 @@
                     cache: false,
                     success: function(result) {
                     	console.log(result);
-                        if (result == 'Success')
+                        if (result == 2)
                             $('#response').html('<span class="help-block text-success"><i class="icon-checkmark-circle2 position-left"></i>Registration Success</span>').fadeIn('slow');
+                        else if (result == 1)
+                            $('#response').html('<span class="help-block text-success"><i class="icon-checkmark-circle2 position-left"></i>Registration Success, !Transaction not recorded !!</span>').fadeIn('slow');
                         else
                             $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Registration Failed</span>').fadeIn('slow');
 
@@ -73,35 +76,14 @@
 	<!-- Main navbar -->
 	<div class="navbar navbar-inverse bg-indigo">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+			<a class="navbar-brand" href="index.html"><img src="assets\images\logo_light.png" alt=""></a>
 
 			<ul class="nav navbar-nav pull-right visible-xs-block">
 				<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
 			</ul>
 		</div>
 
-		<div class="navbar-collapse collapse" id="navbar-mobile">
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="#">
-						<i class="icon-display4"></i> <span class="visible-xs-inline-block position-right"> Go to website</span>
-					</a>
-				</li>
-
-				<li>
-					<a href="#">
-						<i class="icon-user-tie"></i> <span class="visible-xs-inline-block position-right"> Contact admin</span>
-					</a>
-				</li>
-
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-cog3"></i>
-						<span class="visible-xs-inline-block position-right"> Options</span>
-					</a>
-				</li>
-			</ul>
-		</div>
+		
 	</div>
 	<!-- /main navbar -->
 
@@ -127,21 +109,21 @@
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_id" class="form-control" placeholder="ID">
+								<input type="text" id="userId" class="form-control" placeholder="ID">
 								<div class="form-control-feedback">
 									<i class="icon-pushpin text-muted"></i>
 								</div>
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_name" class="form-control" placeholder="Name">
+								<input type="text" id="userName" class="form-control" placeholder="Name">
 								<div class="form-control-feedback">
 									<i class="icon-user text-muted"></i>
 								</div>
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="user_phone" class="form-control" placeholder="Phone No">
+								<input type="text" id="userPhone" class="form-control" placeholder="Phone No">
 								<div class="form-control-feedback">
 									<i class="icon-phone2 text-muted"></i>
 								</div>

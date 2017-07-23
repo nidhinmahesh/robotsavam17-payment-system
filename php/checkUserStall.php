@@ -1,6 +1,5 @@
 <?php
 $userId=$_POST['userId'];
-$userPhone=$_POST['userPhone'];
 
 		
 include('dbconnect.php');
@@ -11,13 +10,13 @@ include('dbconnect.php');
 	    exit();
 	}
 
-		$query = "SELECT * from users WHERE userId='$userId' and userPhone='$userPhone'";
+		$query = "SELECT * from users WHERE userId='$userId'";
 		$result=$mysqli->query($query);
 		if($result) {
 			$details=$result->fetch_array();
 			echo json_encode($details);
 		} else {
-			echo 0;	
+			echo "User ID does not exists";	
 		}
 
 

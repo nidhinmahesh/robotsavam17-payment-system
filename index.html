@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Update</title>
+	<title>User</title>
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -34,58 +34,52 @@
     $(document).ready(function() {
     	$("#check").click(function() {
     	var userId = $("#userId").val();
+    	var userPhone = $("#userPhone").val();
+        // Returns successful data submission message when the entered information is stored in database.
+        var dataString = 'userId=' + userId + '&userPhone=' + userPhone;
           
-        if (userId == '') {
-            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill userId</span>').fadeIn('slow');
+        if (userId == ''||userPhone=='') {
+            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Please Fill userId and Phone No</span>').fadeIn('slow');
 
             $('#response').delay(500).fadeOut('slow');
         } else {
-        	var data = "userId="+userId;
-			$.post("php/checkUserStall.php", data, function(json) {
-			    console.log(json.userName);
-			    console.log(json.userPhone);
+        	var data = "userId="+userId+"&userPhone="+userPhone;
+			// $.post("php/checkUser.php", data, function(json) {
+			//     console.log(json.userName);
+			//     console.log(json.balance);
 
-			    $("#userName").attr("value",json.userName);
-			    	$("#userPhone").attr("value",json.userPhone);
-			    	$("#balance").attr("value",json.balance);
-			}, "json");
+			//     $("#amount").attr("value",json.balance);
+			//     	$("#userName").attr("value",json.userName);
+			// }, "json");
 
-        }
-            return false;
-        });
-        $("#submit").click(function() {
-            var userPhone = $("#userPhone").val();
-            var amount = $("#amount").val();
-    		var userId = $("#userId").val();
-            // Returns successful data submission message when the entered information is stored in database.
-            var dataString ='userId='+userId+'&userPhone=' + userPhone + '&amount=' + amount;
-          
-            if (userId==''||userPhone == '' || amount == '') {
-                $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Make sure of the phone no and amount</span>').fadeIn('slow');
-
-                $('#response').delay(500).fadeOut('slow');
-            } else {
-                // AJAX Code To Submit Form.
-                $.ajax({
+			$.ajax({
                     type: "POST",
-                    url: "php/updateBal.php",
-                    data: dataString,
+                    url: "php/checkUser.php",
+                    data: data,
+                    dataType: 'json',
                     cache: false,
-                    success: function(result) {
-                    	console.log(result);
-                        if (result == 2)
-                            $('#response').html('<span class="help-block text-success"><i class="icon-checkmark-circle2 position-left"></i>Amount Added Successfully</span>').fadeIn('slow');
-                        else if(result == 1)
-                            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> Amount Added !!!Transaction Log</span>').fadeIn('slow');
+                    success: function(json) {
+                    	console.log(json);
+                        if (json)
+                            {
+                            	console.log(json.userName);
+			    console.log(json.balance);
+
+			    $("#amount").attr("value",json.balance);
+			    	$("#userName").attr("value",json.userName);
+                            }
                         else
-                            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i>Updation Failed</span>').fadeIn('slow');
+                            $('#response').html('<span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i>No Matching Records</span>').fadeIn('slow');
 
                         $('#response').delay(500).fadeOut('slow');
                     }
                 });
-            }
+            
+
+        }
             return false;
         });
+        
     });
 </script>
 </head>
@@ -124,7 +118,7 @@
 						<div class="panel panel-body login-form">
 							<div class="text-center">
 								<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
-								<h5 class="content-group">Update Balance<small class="display-block">Fill the details</small></h5>
+								<h5 class="content-group">User<small class="display-block">Check Balance</small></h5>
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
@@ -134,16 +128,6 @@
 								</div>
 							</div>
 
-							<div class="form-group">
-								<button id="check" class="btn bg-pink-400 btn-block legitRipple">Check <i class="icon-circle-right2 position-right"></i></button>
-							</div>
-
-							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="userName" class="form-control" placeholder="Name">
-								<div class="form-control-feedback">
-									<i class="icon-user text-muted"></i>
-								</div>
-							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
 								<input type="text" id="userPhone" class="form-control" placeholder="Phone No">
@@ -151,26 +135,25 @@
 									<i class="icon-phone2 text-muted"></i>
 								</div>
 							</div>
-							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="balance" class="form-control" placeholder="Balance">
-								<div class="form-control-feedback">
-									<i class="icon-coins text-muted"></i>
-								</div>
-							<div id="response"></div>
-							</div>
-
-							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" id="amount" class="form-control" placeholder="Add to Balance">
-								<div class="form-control-feedback">
-									<i class="icon-coins text-muted"></i>
-								</div>
-							<div id="response"></div>
-							</div>
-
-						
 
 							<div class="form-group">
-								<button name="updateUser" id="submit" type="submit" class="btn bg-pink-400 btn-block">Add Amount <i class="icon-circle-right2 position-right"></i></button>
+								<button id="check" class="btn bg-pink-400 btn-block legitRipple">Check <i class="icon-circle-right2 position-right"></i></button>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input type="text" id="userName" class="form-control" placeholder="Name" readonly="readonly">
+								<div class="form-control-feedback">
+									<i class="icon-user text-muted"></i>
+								</div>
+							</div>
+
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input type="text" id="amount" class="form-control" placeholder="Amount" readonly="readonly">
+								<div class="form-control-feedback">
+									<i class="icon-coins text-muted"></i>
+								</div>
+							<div id="response"></div>
 							</div>
 
 						</div>

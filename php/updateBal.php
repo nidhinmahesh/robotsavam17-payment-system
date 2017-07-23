@@ -1,8 +1,9 @@
 <?php
-$stall="RegistraionDesk"; //TODO Session Variable for registration counter login
-$phone=$_POST['userPhone'];
+$stallId="RegistraionDesk"; //TODO Session Variable for registration counter login
+$item="UPD";
+$userPhone=$_POST['userPhone'];
 $amount=$_POST['amount'];
-$user_id=$_POST['userid'];
+$userId=$_POST['userId'];
 
 		
 include('dbconnect.php');
@@ -13,19 +14,21 @@ include('dbconnect.php');
 	    exit();
 	}
 	
-	$query = "UPDATE users SET balance = balance+$amount where user_phone=$phone and user_id=$user_id";
+	$query = "UPDATE users SET balance = balance+$amount where userPhone=$userPhone and userId=$userId";
 	$mysqli->query($query);
-	$result=$mysqli->affected_rows;
-	if($result) { 
-		$message = "Success";
-		$query="INSERT INTO transactions (user_id, stall_id, amount) VALUES
-	('$user_id', '$stall', '$amount')";	
+	$result=$mysqli->affected_rows;//update success check
+	if($result==1) { //if update user is successful
+		$query="INSERT INTO transactions (userId, stallId,item, amount) VALUES
+	('$userId', '$stallId','$item', '$amount')";	
 		$mysqli->query($query);
+			if(!$mysqli->error)
+				$result = 2;//insert transaction success
 		unset($_POST);
-	} else {
-		$message = "Failed";	
 	}
+	 else 
+		$result = 0;//update failed
 	
-	echo $message;
+	
+	echo $result;
 
 ?>
