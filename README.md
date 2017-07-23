@@ -38,6 +38,10 @@ You can recharge your account only through recharge desk in the registration are
 ## User
 ![alt text](https://imgur.com/Xf1e0P7.gif)
 
+## Data
+![alt text](http://i.imgur.com/z8q8keX.jpg)
+
+
 # License
 ````
                                  Apache License
